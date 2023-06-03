@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/pictures">
+        <file>bombermanPic/mainwindowBACK.png</file>
+        <file>bombermanPic/game-over-screen.png</file>
+        <file>bombermanPic/body1.png</file>
+        <file>bombermanPic/elem1_stand_0_0.png</file>
+        <file>bombermanPic/elem4_stand_0_0.png</file>
+        <file>bombermanPic/elem5_stand_0_0.png</file>
+        <file>bombermanPic/elem6_stand_0_0.png</file>
+        <file>bombermanPic/elem7_stand_0_0.png</file>
+        <file>bombermanPic/bg.png</file>
+        <file>bombermanPic/bomb1_stand_0_0.png</file>
+        <file>bombermanPic/elem2_stand_0_0.png</file>
+        <file>bombermanPic/elem3_stand_0_0.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>bombermanPic/door.png</file>
+    </qresource>
+</RCC>
