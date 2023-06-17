@@ -12,6 +12,7 @@
         <file>bombermanPic/bomb1_stand_0_0.png</file>
         <file>bombermanPic/elem2_stand_0_0.png</file>
         <file>bombermanPic/elem3_stand_0_0.png</file>
+        <file>bombermanPic/flame1_stand_0_0.png</file>
     </qresource>
     <qresource prefix="/">
         <file>bombermanPic/door.png</file>

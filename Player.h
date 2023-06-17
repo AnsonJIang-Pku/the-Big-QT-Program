@@ -8,13 +8,14 @@
 #include <QPointer>
 #include <stdbool.h>
 #include "Game.h"
-#include "Bomb.h"
+
 class Player : public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
 public:
     int xPlayer;
     int yPlayer;
+    int Power;
     int playerSize;
     QPointer<Game> game;
     QTimer movementTimer;

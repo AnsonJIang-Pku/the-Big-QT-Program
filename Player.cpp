@@ -14,9 +14,8 @@
 
 Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
-    xPlayer = 40;
-    yPlayer = 160;
     step = 3;
+    Power = 2;
     movementTimer.setInterval(16);
     connect(&movementTimer, SIGNAL(timeout()), this, SLOT(updateCharacterPosition()));
     movementTimer.start();
@@ -49,7 +48,7 @@ void Player :: keyPressEvent(QKeyEvent *event)
     }
 }
 void Player :: setBomb(int xBomb, int yBomb) {
-    Bomb* bomb = new Bomb(xBomb, yBomb, this->game);
+    Bomb* bomb = new Bomb(xBomb, yBomb, Power, this, this->game);
     this->game->scene->addItem(bomb);
 }
 void Player :: keyReleaseEvent(QKeyEvent *event)
@@ -76,29 +75,50 @@ void  Player :: updateCharacterPosition()
     int y0 = 160;
     int w = 520;
     int h = 320;
+    int box_x1 = xPlayer - x0;
+    int box_y1 = yPlayer - y0 + 25;
+    int box_x2 = box_x1 + 35;
+    int box_y2 = box_y1 + 35;
 
     Map* map = this->game->map;
     if (moveLeft)
-        if(xPlayer + 20 - step >= x0 &&
-            (map->table[(yPlayer - y0 + playerSize) / blockSize][(xPlayer - x0 - step) / blockSize]->type) == EMPTY
-            && (map->table[(yPlayer - y0) / blockSize][(xPlayer - x0 - step) / blockSize]->type) == EMPTY)
-        dx -= step;
+        if (box_x1 - step >= 0 && map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY
+            && map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY)
+            dx -= step;
     if (moveRight)
-        if(xPlayer + playerSize + step <= x0 + w &&
-            (map->table[(yPlayer - y0 + playerSize) / blockSize][(xPlayer - x0 + step + playerSize) / blockSize]->type) == EMPTY
-              &&(map->table[(yPlayer - y0) / blockSize][(xPlayer -x0 + step + playerSize) / blockSize])->type == EMPTY)
-        dx += step;
-    if (moveUp && dx == 0)
-        if(yPlayer + 30 - step >= y0 &&
-            (map->table[(yPlayer + 30 - y0 - step) / blockSize][(xPlayer - x0 + playerSize) / blockSize]->type) == EMPTY
-            &&(map->table[(yPlayer + 30 - y0 - step) / blockSize][(xPlayer - x0) / blockSize]->type) == EMPTY)
+        if (box_x2 + step < w && map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY
+            && map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY)
+            dx += step;
+    if (moveUp)
+        if (box_y1 - step >= 0 && map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->type == EMPTY
+            && map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->type == EMPTY)
+            dy -= step;
+    if (moveDown)
+        if (box_y2 + step < h && map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->type == EMPTY
+            && map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->type == EMPTY)
+            dy += step;
 
-        dy -= step;
-    if (moveDown && dx == 0)
-        if(yPlayer + 20 + playerSize + step <= y0 + h &&
-            (map->table[(yPlayer - y0 + step + playerSize) / blockSize][(xPlayer - x0 + playerSize) / blockSize]->type == EMPTY)
-            && (map->table[(yPlayer - y0 + step + playerSize) / blockSize][(xPlayer - x0) / blockSize])->type == EMPTY)
-        dy += step;
+//    if (moveLeft)
+//        if(xPlayer + 20 - step >= x0 &&
+//            (map->table[(yPlayer - y0 + playerSize) / blockSize][(xPlayer - x0 - step) / blockSize]->type) == EMPTY
+//            && (map->table[(yPlayer - y0) / blockSize][(xPlayer - x0 - step) / blockSize]->type) == EMPTY)
+//        dx -= step;
+//    if (moveRight)
+//        if(xPlayer + playerSize + step <= x0 + w &&
+//            (map->table[(yPlayer - y0 + playerSize) / blockSize][(xPlayer - x0 + step + playerSize) / blockSize]->type) == EMPTY
+//              &&(map->table[(yPlayer - y0) / blockSize][(xPlayer -x0 + step + playerSize) / blockSize])->type == EMPTY)
+//        dx += step;
+//    if (moveUp && dx == 0)
+//        if(yPlayer + 30 - step >= y0 &&
+//            (map->table[(yPlayer + 30 - y0 - step) / blockSize][(xPlayer - x0 + playerSize) / blockSize]->type) == EMPTY
+//            &&(map->table[(yPlayer + 30 - y0 - step) / blockSize][(xPlayer - x0) / blockSize]->type) == EMPTY)
+
+//        dy -= step;
+//    if (moveDown && dx == 0)
+//        if(yPlayer + 20 + playerSize + step <= y0 + h &&
+//            (map->table[(yPlayer - y0 + step + playerSize) / blockSize][(xPlayer - x0 + playerSize) / blockSize]->type == EMPTY)
+//            && (map->table[(yPlayer - y0 + step + playerSize) / blockSize][(xPlayer - x0) / blockSize])->type == EMPTY)
+//        dy += step;
 
     // Update character position
     xPlayer += dx;

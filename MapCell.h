@@ -23,7 +23,7 @@ public:
         return *this;
     }
     MapCell();
-    void removeItem(MapCell* item);
+    void removeItem();
 };
 
 

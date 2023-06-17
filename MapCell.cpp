@@ -7,9 +7,8 @@ MapCell::MapCell(CellType cellType)
     type = cellType;
 }
 
-void MapCell::removeItem(MapCell *item)
+void MapCell::removeItem()
 {
     scene()->removeItem(this);
 }
-
 MapCell::MapCell(){}

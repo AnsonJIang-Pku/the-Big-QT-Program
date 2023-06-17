@@ -23,6 +23,8 @@ set(PROJECT_SOURCES
         Player.h
         Map.cpp
         Map.h
+        Flame.h
+        Flame.cpp
         Bomb.cpp
         Bomb.h
         resourses.qrc
