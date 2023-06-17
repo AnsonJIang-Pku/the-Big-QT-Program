@@ -45,38 +45,47 @@ void Bomb :: destroyItem() {
 
     setFlame(xBomb, yBomb);
     for (int i = 1; i <= Power; i++) {
-        if ((xBomb - x0 - i * blockSize) / blockSize >= 0) {
+        if ((xBomb - x0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 - i * blockSize) / blockSize]->type == EMPTY) {
             setFlame(xBomb - i * blockSize, yBomb);
         }
-        if ((yBomb - y0 - i * blockSize) / blockSize >= 0) {
+        if ((yBomb - y0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0 - i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == EMPTY) {
             setFlame(xBomb, yBomb - i * blockSize);
         }
-        if ((xBomb - x0 + i * blockSize) / blockSize <= 12) {
+        if ((xBomb - x0 + i * blockSize) / blockSize <= 12 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 + i * blockSize) / blockSize]->type == EMPTY) {
             setFlame(xBomb + i * blockSize, yBomb);
         }
-        if ((yBomb - y0 + i * blockSize) / blockSize <= 7) {
+        if ((yBomb - y0 + i * blockSize) / blockSize <= 7 && map->table[(yBomb - y0 + i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == EMPTY) {
             setFlame(xBomb, yBomb + i * blockSize);
         }
 
     }
 
 //for destroy block
+    bool a[4] = {0};
     for (int i = 1; i <= Power; i++) {
-        if ((xBomb - x0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 - i * blockSize) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
+        if (!a[0] && (xBomb - x0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 - i * blockSize) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
             map->table[(yBomb - y0)/ blockSize][(xBomb - x0 - i * blockSize) / blockSize]->removeItem();
             map->setEmptyCell((yBomb - y0) / blockSize, (xBomb - x0 - i * blockSize) / blockSize);
+            setFlame(xBomb - i * blockSize, yBomb);
+            a[0] = true;
         }
-        if ((yBomb - y0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0 - i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
+        if (!a[1] && (yBomb - y0 - i * blockSize) / blockSize >= 0 && map->table[(yBomb - y0 - i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
             map->table[(yBomb - y0 - i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->removeItem();
             map->setEmptyCell((yBomb - y0 - i * blockSize) / blockSize, (xBomb - x0) / blockSize);
+            setFlame(xBomb, yBomb - i * blockSize);
+            a[1] = true;
         }
-        if ((xBomb - x0 + i * blockSize) / blockSize <= 12 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 + i * blockSize) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
+        if (!a[2] && (xBomb - x0 + i * blockSize) / blockSize <= 12 && map->table[(yBomb - y0)/ blockSize][(xBomb - x0 + i * blockSize) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
             map->table[(yBomb - y0)/ blockSize][(xBomb - x0 + i * blockSize) / blockSize]->removeItem();
             map->setEmptyCell((yBomb - y0) / blockSize, (xBomb - x0 + i * blockSize) / blockSize);
+            setFlame(xBomb + i * blockSize, yBomb);
+            a[2] = true;
         }
-        if ((yBomb - y0 + i * blockSize) / blockSize <= 7 && map->table[(yBomb - y0 + i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
+        if (!a[3] && (yBomb - y0 + i * blockSize) / blockSize <= 7 && map->table[(yBomb - y0 + i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->type == DESTRUCTIBLE_BLOCK) {
             map->table[(yBomb - y0 + i * blockSize)/ blockSize][(xBomb - x0) / blockSize]->removeItem();
             map->setEmptyCell((yBomb - y0 + i * blockSize) / blockSize, (xBomb - x0) / blockSize);
+            setFlame(xBomb, yBomb + i * blockSize);
+            a[3] = true;
         }
     }
 
