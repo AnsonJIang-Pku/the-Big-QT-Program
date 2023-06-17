@@ -14,6 +14,7 @@ public:
     CellType type;
     int iIndex;
     int jIndex;
+    bool isBomb;
     MapCell(CellType cellType);
     MapCell& operator=(const MapCell* right)
     {

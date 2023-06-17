@@ -14,6 +14,11 @@
 
 Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
+    for (int i = 0; i < 4; i++) record[i] = false;
+    moveLeft = false;
+    moveRight = false;
+    moveUp = false;
+    moveDown = false;
     step = 3;
     Power = 2;
     movementTimer.setInterval(16);
@@ -33,15 +38,43 @@ void Player :: keyPressEvent(QKeyEvent *event)
     yPlayer = y();
     if (event->key() == Qt::Key_Left) {
         moveLeft = true;
+        record[0] = moveLeft;
+        record[1] = moveRight;
+        record[2] = moveUp;
+        record[3] = moveDown;
+        moveRight = false;
+        moveUp = false;
+        moveDown = false;
     }
     else if (event->key() == Qt::Key_Right) {
         moveRight = true;
+        record[0] = moveLeft;
+        record[1] = moveRight;
+        record[2] = moveUp;
+        record[3] = moveDown;
+        moveLeft = false;
+        moveUp = false;
+        moveDown = false;
     }
     else if (event->key() == Qt::Key_Up) {
         moveUp = true;
+        record[0] = moveLeft;
+        record[1] = moveRight;
+        record[2] = moveUp;
+        record[3] = moveDown;
+        moveLeft = false;
+        moveRight = false;
+        moveDown = false;
     }
     else if (event->key() == Qt::Key_Down) {
         moveDown = true;
+        record[0] = moveLeft;
+        record[1] = moveRight;
+        record[2] = moveUp;
+        record[3] = moveDown;
+        moveLeft = false;
+        moveRight = false;
+        moveUp = false;
     }
     else if (event->key() == Qt::Key_Space) {
         setBomb(xPlayer + 23, yPlayer + 55);
@@ -53,14 +86,34 @@ void Player :: setBomb(int xBomb, int yBomb) {
 }
 void Player :: keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Left)
+    if (event->key() == Qt::Key_Left) {
         moveLeft = false;
-    else if (event->key() == Qt::Key_Right)
+        record[0] = false;
+        moveRight = record[1];
+        moveUp = record[2];
+        moveDown = record[3];
+    }
+    else if (event->key() == Qt::Key_Right) {
         moveRight = false;
-    else if (event->key() == Qt::Key_Up)
+        record[1] = false;
+        moveLeft = record[0];
+        moveUp = record[2];
+        moveDown = record[3];
+    }
+    else if (event->key() == Qt::Key_Up) {
         moveUp = false;
-    else if (event->key() == Qt::Key_Down)
+        record[2] = false;
+        moveLeft = record[0];
+        moveRight = record[1];
+        moveDown = record[3];
+    }
+    else if (event->key() == Qt::Key_Down) {
         moveDown = false;
+        record[3] = false;
+        moveLeft = record[0];
+        moveRight = record[1];
+        moveUp = record[2];
+    }
 }
 
 void  Player :: updateCharacterPosition()

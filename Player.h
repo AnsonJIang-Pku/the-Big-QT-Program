@@ -19,6 +19,7 @@ public:
     int playerSize;
     QPointer<Game> game;
     QTimer movementTimer;
+    bool record[4];
     bool moveLeft;
     bool moveRight;
     bool moveUp;
