@@ -32,7 +32,7 @@ public:
     Game(int level, QWidget *parent = 0);
     QPointer<QGraphicsScene>  scene;
     QPointer<Map> map;
-    QPointer<Player> player;
+    QPointer<Player> player1, player2;
     QPointer<QTimer> timer;
     /*QSharedPointer <EnemyMoveUpDown> enemyUpDown;
     QSharedPointer <EnemyMoveLeftRight> enemyLeftRight;*/

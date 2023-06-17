@@ -7,22 +7,22 @@
 #include <QGraphicsRectItem>
 
 #include "constants.h"
-
+class Bomb;
 class MapCell: public QObject, public QGraphicsPixmapItem
 {
 public:
     CellType type;
     int iIndex;
     int jIndex;
-    bool isBomb;
+    Bomb* bomb = NULL;
     MapCell(CellType cellType);
-    MapCell& operator=(const MapCell* right)
-    {
-        type = right->type;
-        iIndex = right->iIndex;
-        jIndex = right->jIndex;
-        return *this;
-    }
+//    MapCell& operator=(const MapCell* right)
+//    {
+//        type = right->type;
+//        iIndex = right->iIndex;
+//        jIndex = right->jIndex;
+//        return *this;
+//    }
     MapCell();
     void removeItem();
 };

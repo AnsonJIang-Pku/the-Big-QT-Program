@@ -20,6 +20,7 @@ private:
     int xBomb;
     int yBomb;
     int Power;
+    bool active;
     Player* player;
     QTimer* timer;
 public slots:
@@ -28,6 +29,7 @@ public:
     QPointer<Game> game;
     Bomb(int x, int y, int _Power, Player * _p, Game* game, QGraphicsItem* parent = 0);
     void setFlame(int x, int y);
+    void destroy();
 };
 
 #endif

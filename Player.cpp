@@ -12,13 +12,14 @@
 #include "constants.h"
 
 
-Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+Player::Player(int _idx, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
     for (int i = 0; i < 4; i++) record[i] = false;
     moveLeft = false;
     moveRight = false;
     moveUp = false;
     moveDown = false;
+    idx = _idx;
     step = 3;
     Power = 2;
     movementTimer.setInterval(16);
@@ -36,83 +37,182 @@ void Player :: keyPressEvent(QKeyEvent *event)
 {
     xPlayer = x();
     yPlayer = y();
-    if (event->key() == Qt::Key_Left) {
-        moveLeft = true;
-        record[0] = moveLeft;
-        record[1] = moveRight;
-        record[2] = moveUp;
-        record[3] = moveDown;
-        moveRight = false;
-        moveUp = false;
-        moveDown = false;
+    if (idx == 0) {
+        if (event->key() == Qt::Key_Left) {
+            moveLeft = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveRight = false;
+            moveUp = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_Right) {
+            moveRight = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveUp = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_Up) {
+            moveUp = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveRight = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_Down) {
+            moveDown = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveRight = false;
+            moveUp = false;
+        }
+        else if (event->key() == Qt::Key_Enter) {
+            int blockSize = 40;
+            int playerSize = 40;
+            int x0 = 40;
+            int y0 = 160;
+            int bomb_x = xPlayer + 23;
+            int bomb_y = yPlayer + 55;
+            Map* map = this->game->map;
+            if (!map->table[(bomb_y - bomb_y % 40 - y0) / blockSize][(bomb_x - bomb_x % 40 - x0) / blockSize]->bomb) {
+                map->table[(bomb_y - bomb_y % 40 - y0) / blockSize][(bomb_x - bomb_x % 40 - x0) / blockSize]->bomb = setBomb(bomb_x, bomb_y);
+            }
+        }
     }
-    else if (event->key() == Qt::Key_Right) {
-        moveRight = true;
-        record[0] = moveLeft;
-        record[1] = moveRight;
-        record[2] = moveUp;
-        record[3] = moveDown;
-        moveLeft = false;
-        moveUp = false;
-        moveDown = false;
+    if (idx == 1) {
+        if (event->key() == Qt::Key_A) {
+            moveLeft = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveRight = false;
+            moveUp = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_D) {
+            moveRight = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveUp = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_W) {
+            moveUp = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveRight = false;
+            moveDown = false;
+        }
+        else if (event->key() == Qt::Key_S) {
+            moveDown = true;
+            record[0] = moveLeft;
+            record[1] = moveRight;
+            record[2] = moveUp;
+            record[3] = moveDown;
+            moveLeft = false;
+            moveRight = false;
+            moveUp = false;
+        }
+        else if (event->key() == Qt::Key_Space) {
+            int blockSize = 40;
+            int playerSize = 40;
+            int x0 = 40;
+            int y0 = 160;
+            int bomb_x = xPlayer + 23;
+            int bomb_y = yPlayer + 55;
+            Map* map = this->game->map;
+            if (!map->table[(bomb_y - bomb_y % 40 - y0) / blockSize][(bomb_x - bomb_x % 40 - x0) / blockSize]->bomb) {
+                map->table[(bomb_y - bomb_y % 40 - y0) / blockSize][(bomb_x - bomb_x % 40 - x0) / blockSize]->bomb = setBomb(bomb_x, bomb_y);
+            }
+        }
     }
-    else if (event->key() == Qt::Key_Up) {
-        moveUp = true;
-        record[0] = moveLeft;
-        record[1] = moveRight;
-        record[2] = moveUp;
-        record[3] = moveDown;
-        moveLeft = false;
-        moveRight = false;
-        moveDown = false;
-    }
-    else if (event->key() == Qt::Key_Down) {
-        moveDown = true;
-        record[0] = moveLeft;
-        record[1] = moveRight;
-        record[2] = moveUp;
-        record[3] = moveDown;
-        moveLeft = false;
-        moveRight = false;
-        moveUp = false;
-    }
-    else if (event->key() == Qt::Key_Space) {
-        setBomb(xPlayer + 23, yPlayer + 55);
-    }
+
 }
-void Player :: setBomb(int xBomb, int yBomb) {
+Bomb* Player :: setBomb(int xBomb, int yBomb) {
     Bomb* bomb = new Bomb(xBomb, yBomb, Power, this, this->game);
     this->game->scene->addItem(bomb);
+    return bomb;
 }
 void Player :: keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Left) {
-        moveLeft = false;
-        record[0] = false;
-        moveRight = record[1];
-        moveUp = record[2];
-        moveDown = record[3];
+    if (idx == 0) {
+        if (event->key() == Qt::Key_Left) {
+            moveLeft = false;
+            record[0] = false;
+            moveRight = record[1];
+            moveUp = record[2];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_Right) {
+            moveRight = false;
+            record[1] = false;
+            moveLeft = record[0];
+            moveUp = record[2];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_Up) {
+            moveUp = false;
+            record[2] = false;
+            moveLeft = record[0];
+            moveRight = record[1];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_Down) {
+            moveDown = false;
+            record[3] = false;
+            moveLeft = record[0];
+            moveRight = record[1];
+            moveUp = record[2];
+        }
     }
-    else if (event->key() == Qt::Key_Right) {
-        moveRight = false;
-        record[1] = false;
-        moveLeft = record[0];
-        moveUp = record[2];
-        moveDown = record[3];
-    }
-    else if (event->key() == Qt::Key_Up) {
-        moveUp = false;
-        record[2] = false;
-        moveLeft = record[0];
-        moveRight = record[1];
-        moveDown = record[3];
-    }
-    else if (event->key() == Qt::Key_Down) {
-        moveDown = false;
-        record[3] = false;
-        moveLeft = record[0];
-        moveRight = record[1];
-        moveUp = record[2];
+    if (idx == 1) {
+        if (event->key() == Qt::Key_A) {
+            moveLeft = false;
+            record[0] = false;
+            moveRight = record[1];
+            moveUp = record[2];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_D) {
+            moveRight = false;
+            record[1] = false;
+            moveLeft = record[0];
+            moveUp = record[2];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_W) {
+            moveUp = false;
+            record[2] = false;
+            moveLeft = record[0];
+            moveRight = record[1];
+            moveDown = record[3];
+        }
+        else if (event->key() == Qt::Key_S) {
+            moveDown = false;
+            record[3] = false;
+            moveLeft = record[0];
+            moveRight = record[1];
+            moveUp = record[2];
+        }
     }
 }
 

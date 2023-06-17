@@ -35,12 +35,19 @@ Game::Game(int level, QWidget* parent) : level(1)
     //health->setPos(health->x() + 400, health->y() + 25);
     //scene->addItem(health);
 
-    player = new Player();
-    player->setPos(300, 300);
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
+    player1 = new Player(0);
+    player1->setPos(300, 300);
+    player1->setFlag(QGraphicsItem::ItemIsFocusable);
+    player1->setFocus();
 
-    scene->addItem(player);
+    scene->addItem(player1);
+
+    player2 = new Player(1);
+    player2->setPos(300, 100);
+    player2->setFlag(QGraphicsItem::ItemIsFocusable);
+    player2->setFocus();
+
+    scene->addItem(player2);
 
     show();
 
@@ -49,78 +56,79 @@ Game::Game(int level, QWidget* parent) : level(1)
 void Game::setUpGameLinks()
 {
     map->setGame(this);
-    player->setGame(this);
+    player1->setGame(this);
+    player2->setGame(this);
    // enemyUpDown->setGame(this);
    // enemyLeftRight->setGame(this);
 
 }
 
-void Game ::goToTheNextLevel()
-{
-    level++;
-//    connect(this, SIGNAL(this->level > 2),this,SLOT(gameIsOver()));
-    if (level > 2)
-    {
-        endGame = new GameIsWin();
-        endGame->setPos(endGame->x() + 180, endGame->y() + 240);
-        scene->addItem(endGame);
-        timer = new QTimer(this);
-        connect(timer,SIGNAL(timeout()),this,SLOT(gameIsOver()));
-        timer->start(3000);
-
-        return;
-    }
-
-    clearFocus();
-
-    delete scene;
-
-    scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 800, 600);
-    setScene(scene);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(800, 600);
-
-    setBackgroundBrush(QBrush(QImage(":/pictures/bombermanPic/groundLevel2.png")));
-//    if (!enemyLeftRight.isNull())
+//void Game ::goToTheNextLevel()
+//{
+//    level++;
+////    connect(this, SIGNAL(this->level > 2),this,SLOT(gameIsOver()));
+//    if (level > 2)
 //    {
-//        scene->removeItem(enemyLeftRight);
-//        delete enemyLeftRight;
-//    }
-//    if (!enemyUpDown.isNull())
-//    {
-//        scene->removeItem(enemyUpDown);
-//        delete enemyUpDown;
+//        endGame = new GameIsWin();
+//        endGame->setPos(endGame->x() + 180, endGame->y() + 240);
+//        scene->addItem(endGame);
+//        timer = new QTimer(this);
+//        connect(timer,SIGNAL(timeout()),this,SLOT(gameIsOver()));
+//        timer->start(3000);
+
+//        return;
 //    }
 
+//    clearFocus();
 
-//    enemyUpDown = new EnemyMoveUpDown(UP_DOWN, 410, 110);
-//    enemyLeftRight = new EnemyMoveLeftRight(LEFT_TO_RIGHT, 100, 400);
+//    delete scene;
 
-//    scene->addItem(enemyLeftRight);
-//    scene->addItem(enemyUpDown);
+//    scene = new QGraphicsScene();
+//    scene->setSceneRect(0, 0, 800, 600);
+//    setScene(scene);
+//    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    setFixedSize(800, 600);
 
-    scene->removeItem(map);
-    delete map;
-    map = new Map(level, scene);
-    scene->addItem(map);
+//    setBackgroundBrush(QBrush(QImage(":/pictures/bombermanPic/groundLevel2.png")));
+////    if (!enemyLeftRight.isNull())
+////    {
+////        scene->removeItem(enemyLeftRight);
+////        delete enemyLeftRight;
+////    }
+////    if (!enemyUpDown.isNull())
+////    {
+////        scene->removeItem(enemyUpDown);
+////        delete enemyUpDown;
+////    }
 
-    scene->removeItem(health);
-    delete health;
-    health = new Health();
-    health->setPos(health->x() + 600, health->y() + 25);
-    scene->addItem(health);
 
-    delete player;
-    player = new Player();
+////    enemyUpDown = new EnemyMoveUpDown(UP_DOWN, 410, 110);
+////    enemyLeftRight = new EnemyMoveLeftRight(LEFT_TO_RIGHT, 100, 400);
 
-    player->setPos(0, 0);
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
+////    scene->addItem(enemyLeftRight);
+////    scene->addItem(enemyUpDown);
 
-    scene->addItem(player);
+//    scene->removeItem(map);
+//    delete map;
+//    map = new Map(level, scene);
+//    scene->addItem(map);
 
-    this->setUpGameLinks();
-    show();
-}
+//    scene->removeItem(health);
+//    delete health;
+//    health = new Health();
+//    health->setPos(health->x() + 600, health->y() + 25);
+//    scene->addItem(health);
+
+//    delete player;
+//    player = new Player();
+
+//    player->setPos(0, 0);
+//    player->setFlag(QGraphicsItem::ItemIsFocusable);
+//    player->setFocus();
+
+//    scene->addItem(player);
+
+//    this->setUpGameLinks();
+//    show();
+//}

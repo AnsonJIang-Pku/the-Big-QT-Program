@@ -15,6 +15,7 @@ Q_OBJECT
 public:
     int xPlayer;
     int yPlayer;
+    int idx;
     int Power;
     int playerSize;
     QPointer<Game> game;
@@ -25,14 +26,14 @@ public:
     bool moveUp;
     bool moveDown;
     int step;
-    Player(QGraphicsItem * parent=0);
+    Player(int idx, QGraphicsItem * parent=0);
     void keyPressEvent(QKeyEvent * event);
     void keyReleaseEvent(QKeyEvent * event);
     void setGame(Game* game);
 private slots:
     void updateCharacterPosition();
     //void spawnEnemy();
-    void setBomb(int xBomb, int yBomb);
+    Bomb* setBomb(int xBomb, int yBomb);
 };
 
 #endif
