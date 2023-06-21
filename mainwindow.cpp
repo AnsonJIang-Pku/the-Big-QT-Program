@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QPixmap bkgnd(":/pictures/bombermanPic/mainwindowBACK.png");
+    QPixmap bkgnd(":/pictures/bombermanPic/Cover3.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
@@ -25,9 +25,29 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_playButton_clicked()
 {
-    this->close();
-    bomberman = new Game(1);
-    bomberman->setUpGameLinks();
+    //
+    n++;
+    if (n == 1) {
+        QPixmap bkgnd(":/pictures/bombermanPic/Cover1.png");
+        bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+        QPalette palette;
+        palette.setBrush(QPalette::Window, bkgnd);
+        this->setPalette(palette);
+    }
+    if (n == 2) {
+        QPixmap bkgnd(":/pictures/bombermanPic/Cover2.png");
+        bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+        QPalette palette;
+        palette.setBrush(QPalette::Window, bkgnd);
+        this->setPalette(palette);
+    }
+    if (n == 3) {
+        this->close();
+        bomberman = new Game(1);
+        bomberman->setUpGameLinks();
+    }
+
+
     //bomberman->show();
 
 }
