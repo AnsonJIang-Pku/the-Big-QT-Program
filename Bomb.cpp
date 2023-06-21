@@ -23,6 +23,10 @@ Bomb::Bomb(int x, int y, int _Power, Player* _p, Game* game, QGraphicsItem* pare
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(destroyItem()));
     timer->start(3000);
+    bombsound = new QMediaPlayer();
+    audioOutput = new QAudioOutput();
+    bombsound->setAudioOutput(audioOutput);
+    bombsound->setSource(QUrl("qrc:/sounds/sound_effects/boom.wav"));
 }
 void Bomb::destroy() {
     timer = new QTimer(this);
@@ -32,6 +36,8 @@ void Bomb::destroy() {
 void Bomb::setFlame(int x, int y) {
     Flame* flame = new Flame(x, y, this->game);
     this->game->scene->addItem(flame);
+    audioOutput->setVolume(1);
+    bombsound->play();
 }
 void Bomb :: destroyItem() {
     if (!active) {

@@ -10,6 +10,8 @@
 #include <QGraphicsScene>
 #include <QPointer>
 #include <vector>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "Flame.h"
 #include "Map.h"
 class Player;
@@ -23,6 +25,8 @@ private:
     bool active;
     Player* player;
     QTimer* timer;
+    QMediaPlayer * bombsound;
+    QAudioOutput * audioOutput;
 public slots:
     void destroyItem();
 public:

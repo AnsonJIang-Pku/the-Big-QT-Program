@@ -6,6 +6,8 @@
 #include <iostream>
 #include "Game.h"
 #include <cstdlib>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 class EnemyMoveLeftRight;
 class EnemyMoveUpDown;
@@ -50,6 +52,15 @@ Game::Game(int level, QWidget* parent) : level(1)
     //player2->setFocus();
 
     scene->addItem(player2);
+
+    QMediaPlayer * player = new QMediaPlayer();
+    QAudioOutput * audioOutput = new QAudioOutput(); // chooses the default audio routing
+    player->setAudioOutput(audioOutput);
+    player->setSource(QUrl("qrc:/sounds/sound_effects/bgm.mp3"));
+    player->setLoops(-1);
+    audioOutput->setVolume(0.45);
+    player->play();
+
     show();
 
 }
