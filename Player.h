@@ -17,7 +17,10 @@ public:
     int yPlayer;
     int idx;
     int Power;
+    int MaxBomb;
+    int UsedBomb;
     int playerSize;
+    int TimeInterval;
     QPointer<Game> game;
     QTimer movementTimer;
     bool record[4];
@@ -27,9 +30,10 @@ public:
     bool moveDown;
     int step;
     Player(int idx, QGraphicsItem * parent=0);
-    void keyPressEvent(QKeyEvent * event);
-    void keyReleaseEvent(QKeyEvent * event);
+    void keyPressEvent(char c);
+    void keyReleaseEvent(char c);
     void setGame(Game* game);
+    void die();
 private slots:
     void updateCharacterPosition();
     //void spawnEnemy();

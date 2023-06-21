@@ -27,6 +27,8 @@ set(PROJECT_SOURCES
         Flame.cpp
         Bomb.cpp
         Bomb.h
+        prop.H
+        prop.cpp
         resourses.qrc
         MapCell.cpp
         MapCell.h

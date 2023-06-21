@@ -106,6 +106,7 @@ void Bomb :: destroyItem() {
     active = false;
     scene->removeItem(this);
     this->game->map->table[(yBomb - y0)/ blockSize][(xBomb - x0) / blockSize]->bomb = NULL;
+    this->player->UsedBomb--;
     delete timer;
 }
 

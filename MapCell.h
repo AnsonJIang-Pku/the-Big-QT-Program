@@ -8,6 +8,7 @@
 
 #include "constants.h"
 class Bomb;
+class Prop;
 class MapCell: public QObject, public QGraphicsPixmapItem
 {
 public:
@@ -15,6 +16,7 @@ public:
     int iIndex;
     int jIndex;
     Bomb* bomb = NULL;
+    Prop* item = NULL;
     MapCell(CellType cellType);
 //    MapCell& operator=(const MapCell* right)
 //    {

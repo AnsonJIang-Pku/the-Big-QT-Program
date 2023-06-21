@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 
 #include "Map.h"
-
+#include "prop.h"
 Map :: Map(int level, QGraphicsScene* scene, QGraphicsItem* parent): QGraphicsPixmapItem(parent)
 {
     LEVEL = level;
@@ -29,13 +29,13 @@ void Map::outputField(QGraphicsScene *scene)
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 13; j++) {
             if (initializationsTable[i][j] == DESTRUCTIBLE_BLOCK_A) {
-                DestructibleBlock *destroyedBlock = new DestructibleBlock(j, i, DESTRUCTIBLE_BLOCK, 0);
+                DestructibleBlock *destroyedBlock = new DestructibleBlock(j, i, DESTRUCTIBLE_BLOCK, 0, game);
                 destroyedBlock->setPos(j * 40 + x0, i * 40 + y0);
                 scene->addItem(destroyedBlock);
                 table[i][j] = destroyedBlock;
             }
             else if (initializationsTable[i][j] == DESTRUCTIBLE_BLOCK_B) {
-                DestructibleBlock *destroyedBlock = new DestructibleBlock(j, i, DESTRUCTIBLE_BLOCK, 1);
+                DestructibleBlock *destroyedBlock = new DestructibleBlock(j, i, DESTRUCTIBLE_BLOCK, 1, game);
                 destroyedBlock->setPos(j * 40 + x0, i * 40 + y0);
                 scene->addItem(destroyedBlock);
                 table[i][j] = destroyedBlock;
@@ -104,6 +104,19 @@ void Map::outputField(QGraphicsScene *scene)
 void Map::setEmptyCell(int i, int j)
 {
     this->table[i][j]->type = EMPTY;
+    int random_number = std::rand() % 100 + 1;
+    if (random_number <= 8) {
+        Prop* item = new Prop(i, j, 0, this->game);
+        this->table[i][j]->item = item;
+    }
+    else if (random_number <= 16) {
+        Prop* item = new Prop(i, j, 1, this->game);
+        this->table[i][j]->item = item;
+    }
+    else if (random_number <= 20) {
+        Prop* item = new Prop(i, j, 2, this->game);
+        this->table[i][j]->item = item;
+    }
 }
 
 
