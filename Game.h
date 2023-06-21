@@ -34,6 +34,7 @@ public:
     QPointer<Map> map;
     QPointer<Player> player1, player2;
     QPointer<QTimer> timer;
+    QPointer<QTimer> timerOver;
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     /*QSharedPointer <EnemyMoveUpDown> enemyUpDown;
@@ -51,7 +52,7 @@ public:
 
 public slots:
     void gameIsOver();
-
+    void reStart();
 };
 
 #endif

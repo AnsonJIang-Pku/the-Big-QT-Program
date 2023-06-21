@@ -6,8 +6,9 @@
 #include <iostream>
 #include "Game.h"
 #include <cstdlib>
-#include <QMediaPlayer>
-#include <QAudioOutput>
+#include <ctime>
+//#include <QMediaPlayer>
+//#include <QAudioOutput>
 
 class EnemyMoveLeftRight;
 class EnemyMoveUpDown;
@@ -17,6 +18,9 @@ void Game::gameIsOver() {
     gameOver->setPos(50, 250);
     scene->addItem(gameOver);
     //std::exit(0);
+    timerOver = new QTimer(this);
+    connect(timerOver,SIGNAL(timeout()),this,SLOT(reStart()));
+    timerOver->start(3000);
 }
 
 
@@ -40,29 +44,63 @@ Game::Game(int level, QWidget* parent) : level(1)
     //scene->addItem(health);
 
     player1 = new Player(0);
-    player1->setPos(300, 300);
+    player1->setPos(275, 200);
     //player1->setFlag(QGraphicsItem::ItemIsFocusable);
     //player1->setFocus();
 
     scene->addItem(player1);
 
     player2 = new Player(1);
-    player2->setPos(300, 200);
+    player2->setPos(275, 350);
     //player2->setFlag(QGraphicsItem::ItemIsFocusable);
     //player2->setFocus();
 
     scene->addItem(player2);
 
-    QMediaPlayer * player = new QMediaPlayer();
-    QAudioOutput * audioOutput = new QAudioOutput(); // chooses the default audio routing
+    /*
+    QMediaPlayer * player=new QMediaPlayer();
+    QAudioOutput * audioOutput = new QAudioOutput();
     player->setAudioOutput(audioOutput);
-    player->setSource(QUrl("qrc:/sounds/sound_effects/bgm.mp3"));
+    player->setSource(QUrl("qrc:/sound_effects/sound_effects/bgm.mp3"));
     player->setLoops(-1);
     audioOutput->setVolume(0.45);
     player->play();
+    */
 
     show();
 
+}
+
+void Game::reStart() {
+    timerOver->stop();
+    delete player1;
+    delete player2;
+    delete map;
+    delete scene;
+    scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, 600, 520);
+    setScene(scene);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setFixedSize(600, 520);
+
+    setBackgroundBrush(QBrush(QImage(":/pictures/bombermanPic/bg.png")));
+
+    map = new Map(level, scene);
+
+
+    player1 = new Player(0);
+    player1->setPos(275, 200);
+
+    scene->addItem(player1);
+
+    player2 = new Player(1);
+    player2->setPos(275, 350);
+
+    scene->addItem(player2);
+
+    show();
+    setUpGameLinks();
 }
 
 void Game::setUpGameLinks()

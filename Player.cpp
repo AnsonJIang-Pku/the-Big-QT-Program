@@ -178,24 +178,40 @@ void  Player :: updateCharacterPosition()
     }
     if (moveLeft)
         if (box_x1 - step >= 0 && map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY
-            && map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY) {
+            && map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY
+            && (map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->bomb == NULL
+                || map->table[box_y1 / blockSize][(box_x1 - step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+            && (map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->bomb == NULL
+                || map->table[box_y2 / blockSize][(box_x1 - step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
             dx -= step;
         }
     if (moveRight)
         if (box_x2 + step < w && map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY
-            && map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY) {
+            && map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY
+            && (map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->bomb == NULL
+                || map->table[box_y1 / blockSize][(box_x2 + step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+            && (map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->bomb == NULL
+                || map->table[box_y2 / blockSize][(box_x2 + step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
             dx += step;
         }
 
     if (moveUp)
         if (box_y1 - step >= 0 && map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->type == EMPTY
-            && map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->type == EMPTY) {
+            && map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->type == EMPTY
+            && (map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->bomb == NULL
+                || map->table[(box_y1 - step) / blockSize][box_x1 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+            && (map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->bomb == NULL
+                || map->table[(box_y1 - step) / blockSize][box_x2 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
             dy -= step;
         }
 
     if (moveDown)
         if (box_y2 + step < h && map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->type == EMPTY
-            && map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->type == EMPTY) {
+            && map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->type == EMPTY
+            && (map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->bomb == NULL
+                || map->table[(box_y2 + step) / blockSize][box_x1 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+            && (map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->bomb == NULL
+                || map->table[(box_y2 + step) / blockSize][box_x2 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
             dy += step;
         }
 

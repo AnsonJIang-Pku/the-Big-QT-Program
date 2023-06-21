@@ -23,10 +23,20 @@ Bomb::Bomb(int x, int y, int _Power, Player* _p, Game* game, QGraphicsItem* pare
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(destroyItem()));
     timer->start(3000);
-    bombsound = new QMediaPlayer();
-    audioOutput = new QAudioOutput();
-    bombsound->setAudioOutput(audioOutput);
-    bombsound->setSource(QUrl("qrc:/sounds/sound_effects/boom.wav"));
+    timerStage = new QTimer(this);
+    connect(timerStage,SIGNAL(timeout()),this,SLOT(reshape()));
+    timerStage->start(500);
+}
+void Bomb::reshape() {
+    stage = (stage + 1) % 4;
+    if (stage == 0)
+        setPixmap(QPixmap(":/pictures/bombermanPic/bomb1_stand_0_0.png"));
+    if (stage == 1)
+        setPixmap(QPixmap(":/pictures/bombermanPic/bomb1_stand_0_1.png"));
+    if (stage == 2)
+        setPixmap(QPixmap(":/pictures/bombermanPic/bomb1_stand_0_2.png"));
+    if (stage == 3)
+        setPixmap(QPixmap(":/pictures/bombermanPic/bomb1_stand_0_3.png"));
 }
 void Bomb::destroy() {
     timer = new QTimer(this);
@@ -36,8 +46,6 @@ void Bomb::destroy() {
 void Bomb::setFlame(int x, int y) {
     Flame* flame = new Flame(x, y, this->game);
     this->game->scene->addItem(flame);
-    audioOutput->setVolume(1);
-    bombsound->play();
 }
 void Bomb :: destroyItem() {
     if (!active) {

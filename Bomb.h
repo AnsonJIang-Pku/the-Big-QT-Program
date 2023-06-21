@@ -10,8 +10,6 @@
 #include <QGraphicsScene>
 #include <QPointer>
 #include <vector>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include "Flame.h"
 #include "Map.h"
 class Player;
@@ -21,19 +19,21 @@ Q_OBJECT
 private:
     int xBomb;
     int yBomb;
+    int stage = 0;
     int Power;
     bool active;
     Player* player;
     QTimer* timer;
-    QMediaPlayer * bombsound;
-    QAudioOutput * audioOutput;
+    QTimer* timerStage;
 public slots:
     void destroyItem();
+    void reshape();
 public:
     QPointer<Game> game;
     Bomb(int x, int y, int _Power, Player * _p, Game* game, QGraphicsItem* parent = 0);
     void setFlame(int x, int y);
     void destroy();
+
 };
 
 #endif

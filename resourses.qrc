@@ -50,28 +50,8 @@
         <file>bombermanPic/m_right.png</file>
         <file>bombermanPic/m_up.png</file>
     </qresource>
-    <qresource prefix="/sounds">
+    <qresource prefix="/sound_effects">
         <file>sound_effects/bgm.mp3</file>
-        <file>sound_effects/bgm2.xm</file>
         <file>sound_effects/boom.wav</file>
-        <file>sound_effects/uiLeave.wav</file>
-        <file>sound_effects/uiMain.wav</file>
-        <file>sound_effects/uiNormal.wav</file>
-        <file>sound_effects/X01.wav</file>
-        <file>sound_effects/X02.wav</file>
-        <file>sound_effects/X03.wav</file>
-        <file>sound_effects/X04.wav</file>
-        <file>sound_effects/X05_01.wav</file>
-        <file>sound_effects/X06_01.wav</file>
-        <file>sound_effects/X07_01.wav</file>
-        <file>sound_effects/X08_01.wav</file>
-        <file>sound_effects/X09_01.wav</file>
-        <file>sound_effects/X10_01.wav</file>
-        <file>sound_effects/X11_01.wav</file>
-        <file>sound_effects/X12_01.wav</file>
-        <file>sound_effects/X13_01.wav</file>
-        <file>sound_effects/X14_01.wav</file>
-        <file>sound_effects/X15_01.wav</file>
-        <file>sound_effects/X17_01.wav</file>
     </qresource>
 </RCC>

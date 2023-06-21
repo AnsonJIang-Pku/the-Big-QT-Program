@@ -105,15 +105,15 @@ void Map::setEmptyCell(int i, int j)
 {
     this->table[i][j]->type = EMPTY;
     int random_number = std::rand() % 100 + 1;
-    if (random_number <= 8) {
+    if (random_number <= 6) {
         Prop* item = new Prop(i, j, 0, this->game);
         this->table[i][j]->item = item;
     }
-    else if (random_number <= 16) {
+    else if (random_number <= 12) {
         Prop* item = new Prop(i, j, 1, this->game);
         this->table[i][j]->item = item;
     }
-    else if (random_number <= 20) {
+    else if (random_number <= 18) {
         Prop* item = new Prop(i, j, 2, this->game);
         this->table[i][j]->item = item;
     }
