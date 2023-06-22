@@ -18,6 +18,7 @@ public:
     int idx;
     int Power;
     int MaxBomb;
+    int alive = 1;
     int UsedBomb;
     int playerSize;
     int TimeInterval;

@@ -19,10 +19,12 @@ Player::Player(int _idx, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
     moveRight = false;
     moveUp = false;
     moveDown = false;
+    xPlayer = x();
+    yPlayer = y();
     idx = _idx;
     step = 3;
     Power = 1;
-    MaxBomb = 3;
+    MaxBomb = 2;
     UsedBomb = 0;
     TimeInterval = 16;
     movementTimer.setInterval(TimeInterval);
@@ -132,7 +134,6 @@ void Player :: keyReleaseEvent(char c)
             moveRight = record[1];
             moveUp = record[2];
         }
-
 }
 
 void  Player :: updateCharacterPosition()
@@ -147,10 +148,10 @@ void  Player :: updateCharacterPosition()
     int y0 = 160;
     int w = 520;
     int h = 320;
-    int box_x1 = xPlayer - x0 + 5;
-    int box_y1 = yPlayer - y0 + 25;
-    int box_x2 = box_x1 + 30;
-    int box_y2 = box_y1 + 30;
+    int box_x1 = xPlayer - x0 + 10;
+    int box_y1 = yPlayer - y0 + 30;
+    int box_x2 = box_x1 + 25;
+    int box_y2 = box_y1 + 25;
 
     Map* map = this->game->map;
     if (map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize]->item != NULL) {
@@ -180,18 +181,18 @@ void  Player :: updateCharacterPosition()
         if (box_x1 - step >= 0 && map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY
             && map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->type == EMPTY
             && (map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->bomb == NULL
-                || map->table[box_y1 / blockSize][(box_x1 - step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+                || map->table[box_y1 / blockSize][(box_x1 - step) / blockSize]->bomb->isObstacle[idx] == false)
             && (map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->bomb == NULL
-                || map->table[box_y2 / blockSize][(box_x1 - step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
+                || map->table[box_y2 / blockSize][(box_x1 - step) / blockSize]->bomb->isObstacle[idx] == false)) {
             dx -= step;
         }
     if (moveRight)
         if (box_x2 + step < w && map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY
             && map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->type == EMPTY
             && (map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->bomb == NULL
-                || map->table[box_y1 / blockSize][(box_x2 + step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+                || map->table[box_y1 / blockSize][(box_x2 + step) / blockSize]->bomb->isObstacle[idx] == false)
             && (map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->bomb == NULL
-                || map->table[box_y2 / blockSize][(box_x2 + step) / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
+                || map->table[box_y2 / blockSize][(box_x2 + step) / blockSize]->bomb->isObstacle[idx] == false)) {
             dx += step;
         }
 
@@ -199,9 +200,9 @@ void  Player :: updateCharacterPosition()
         if (box_y1 - step >= 0 && map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->type == EMPTY
             && map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->type == EMPTY
             && (map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->bomb == NULL
-                || map->table[(box_y1 - step) / blockSize][box_x1 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+                || map->table[(box_y1 - step) / blockSize][box_x1 / blockSize]->bomb->isObstacle[idx] == false)
             && (map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->bomb == NULL
-                || map->table[(box_y1 - step) / blockSize][box_x2 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
+                || map->table[(box_y1 - step) / blockSize][box_x2 / blockSize]->bomb->isObstacle[idx] == false)) {
             dy -= step;
         }
 
@@ -209,9 +210,9 @@ void  Player :: updateCharacterPosition()
         if (box_y2 + step < h && map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->type == EMPTY
             && map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->type == EMPTY
             && (map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->bomb == NULL
-                || map->table[(box_y2 + step) / blockSize][box_x1 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])
+                || map->table[(box_y2 + step) / blockSize][box_x1 / blockSize]->bomb->isObstacle[idx] == false)
             && (map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->bomb == NULL
-                || map->table[(box_y2 + step) / blockSize][box_x2 / blockSize] == map->table[((yPlayer + 55) - (yPlayer + 55) % 40 - 160) / blockSize][((xPlayer + 23) - (xPlayer + 23) % 40 - 40) / blockSize])) {
+                || map->table[(box_y2 + step) / blockSize][box_x2 / blockSize]->bomb->isObstacle[idx] == false)) {
             dy += step;
         }
 
@@ -255,7 +256,10 @@ void Player :: die() {
         setPixmap(QPixmap(":/pictures/bombermanPic/cloth10101_cry_0_0.png"));
     else
         setPixmap(QPixmap(":/pictures/bombermanPic/cloth10301_cry_0_0.png"));
-    this->game->gameIsOver();
+    if (this->game->endGame == 0) {
+        this->game->endGame = 1;
+        this->game->gameIsOver();
+    }
 }
 
 //void Player :: keyPressEvent(QKeyEvent *event)

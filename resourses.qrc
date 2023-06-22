@@ -38,6 +38,8 @@
         <file>bombermanPic/m_left.png</file>
         <file>bombermanPic/m_right.png</file>
         <file>bombermanPic/m_up.png</file>
+        <file>bombermanPic/Cover1.png</file>
+        <file>bombermanPic/Cover2.png</file>
     </qresource>
     <qresource prefix="/">
         <file>bombermanPic/door.png</file>

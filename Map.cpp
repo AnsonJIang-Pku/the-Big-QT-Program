@@ -100,22 +100,32 @@ void Map::outputField(QGraphicsScene *scene)
 //    EnemyMoveUpDown* enemyUpDown = new EnemyMoveUpDown(UP_DOWN);
 //        scene->addItem(enemyUpDown);
 }
-
+void Map::setEmptyTriger(int i, int j)
+{
+    QTimer * t = new QTimer(this);
+    connect(t, &QTimer::timeout, this, [this, i, j]() {
+        setEmptyCell(i, j);
+    });
+    t->start(5);
+}
 void Map::setEmptyCell(int i, int j)
 {
-    this->table[i][j]->type = EMPTY;
-    int random_number = std::rand() % 100 + 1;
-    if (random_number <= 6) {
-        Prop* item = new Prop(i, j, 0, this->game);
-        this->table[i][j]->item = item;
-    }
-    else if (random_number <= 12) {
-        Prop* item = new Prop(i, j, 1, this->game);
-        this->table[i][j]->item = item;
-    }
-    else if (random_number <= 18) {
-        Prop* item = new Prop(i, j, 2, this->game);
-        this->table[i][j]->item = item;
+    if (this->table[i][j]->type != EMPTY) {
+        this->table[i][j]->type = EMPTY;
+        this->table[i][j]->removeItem();
+        int random_number = std::rand() % 100 + 1;
+        if (random_number <= 5) {
+            Prop* item = new Prop(i, j, 0, this->game);
+            this->table[i][j]->item = item;
+        }
+        else if (random_number <= 13) {
+            Prop* item = new Prop(i, j, 1, this->game);
+            this->table[i][j]->item = item;
+        }
+        else if (random_number <= 18) {
+            Prop* item = new Prop(i, j, 2, this->game);
+            this->table[i][j]->item = item;
+        }
     }
 }
 

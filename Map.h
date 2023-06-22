@@ -25,6 +25,8 @@ public:
     void outputField(QGraphicsScene* scene);
     void setGame(Game* game);
     Map();
+    void setEmptyTriger(int i, int j);
+public slots:
     void setEmptyCell(int i, int j);
 };
 

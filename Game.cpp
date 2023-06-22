@@ -10,8 +10,6 @@
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
 
-class EnemyMoveLeftRight;
-class EnemyMoveUpDown;
 
 void Game::gameIsOver() {
     GameIsOver * gameOver = new GameIsOver();
@@ -27,10 +25,10 @@ void Game::gameIsOver() {
 
 Game::Game(int level, QWidget* parent) : level(1)
 {
-
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 600, 520);
     setScene(scene);
+    endGame = 0;
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(600, 520);
@@ -77,6 +75,7 @@ void Game::reStart() {
     delete player2;
     delete map;
     delete scene;
+    endGame = 0;
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 600, 520);
     setScene(scene);

@@ -25,15 +25,18 @@ private:
     Player* player;
     QTimer* timer;
     QTimer* timerStage;
+    QTimer* timerObstacle[2];
 public slots:
     void destroyItem();
     void reshape();
+    void updateObstacle1();
+    void updateObstacle2();
 public:
     QPointer<Game> game;
     Bomb(int x, int y, int _Power, Player * _p, Game* game, QGraphicsItem* parent = 0);
     void setFlame(int x, int y);
     void destroy();
-
+    bool isObstacle[2];
 };
 
 #endif

@@ -35,6 +35,7 @@ public:
     QPointer<Player> player1, player2;
     QPointer<QTimer> timer;
     QPointer<QTimer> timerOver;
+    int endGame;
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     /*QSharedPointer <EnemyMoveUpDown> enemyUpDown;
@@ -45,7 +46,7 @@ public:
 //    EnemyMoveUpDown* enemyUpDown;
 //    EnemyMoveLeftRight* enemyLeftRight;
     QPointer<Health> health;
-    QPointer<GameIsWin> endGame;
+    //QPointer<GameIsWin> endGame;
     //    Background* background;
     void setUpGameLinks();
     void goToTheNextLevel();

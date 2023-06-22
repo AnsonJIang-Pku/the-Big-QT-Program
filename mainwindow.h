@@ -20,7 +20,7 @@ public:
 private slots:
     void on_playButton_clicked();
 
-   // void on_pushButton_clicked();
+    // void on_pushButton_clicked();
 
 
 

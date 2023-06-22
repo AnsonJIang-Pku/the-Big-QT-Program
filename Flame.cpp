@@ -8,7 +8,7 @@
 #include <QList>
 #include <QGraphicsItem>
 #include <stdbool.h>
-
+#include <prop.h>
 
 Flame::Flame(int x, int y, Game* game, QGraphicsItem* parent): QObject(), QGraphicsPixmapItem(parent)
 {
@@ -22,6 +22,10 @@ Flame::Flame(int x, int y, Game* game, QGraphicsItem* parent): QObject(), QGraph
         game->player1->die();
     if (game->player2->xPlayer + 23 >= x && game->player2->xPlayer + 23 < x + 40 && game->player2->yPlayer + 55 >= y && game->player2->yPlayer + 55 < y + 40)
         game->player2->die();
+    if (game->map->table[(y - 160) / 40][(x - 40) / 40]->item != NULL) {
+        game->map->table[(y - 160) / 40][(x - 40) / 40]->item->Vanish();
+        game->map->table[(y - 160) / 40][(x - 40) / 40]->item = NULL;
+    }
 }
 void Flame::Vanish() {
     QPointer<QGraphicsScene> scene = game->scene;
